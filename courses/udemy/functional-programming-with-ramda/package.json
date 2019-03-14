@@ -1,0 +1,17 @@
+{
+  "name": "functional-programming-with-ramda",
+  "version": "0.0.0",
+  "description": "https://www.udemy.com/functional-programming-with-ramda/",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-jest": "^24.5.0",
+    "jest": "^24.5.0"
+  }
+}
