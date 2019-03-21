@@ -1,8 +1,8 @@
-# How to use Serverless with Webpack and Docker locally and in production
+# How to use GraphQL Apollo server with Serverless
 
 > by [Sergei Gannochenko](https://medium.com/@awesome1888)
 
-> https://medium.com/@awesome1888/how-to-use-serverless-locally-with-webpack-and-docker-5e268f71715
+> https://medium.com/@awesome1888/how-to-use-graphql-apollo-server-with-serverless-606430ad94b3
 
 ## How to start
 
