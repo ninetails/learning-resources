@@ -1,0 +1,28 @@
+{
+  "name": "sls-gql-apollo-server",
+  "version": "0.0.0",
+  "description": "How to use GraphQL Apollo server with Serverless",
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "babel-loader": "^8.0.5",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "serverless": "^1.39.1",
+    "serverless-offline": "^4.9.2",
+    "serverless-webpack": "^5.2.0",
+    "webpack": "^4.29.6",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "scripts": {
+    "start": "sls offline start --noTimeout --port 3000 --host 0.0.0.0",
+    "docker": "docker run -it --rm -p 3000:3000 -v $PWD:/usr/src/app -w /usr/src/app node:8.10-alpine ./node_modules/.bin/sls offline start --noTimeout --port 3000 --host 0.0.0.0"
+  },
+  "dependencies": {
+    "apollo-server-lambda": "^2.4.8",
+    "axios": "^0.18.0",
+    "merge-graphql-schemas": "^1.5.8"
+  }
+}

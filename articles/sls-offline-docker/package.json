@@ -1,0 +1,21 @@
+{
+  "name": "sls-offline-docker",
+  "version": "0.0.0",
+  "description": "How to use Serverless with Webpack and Docker locally and in production",
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "babel-loader": "^8.0.5",
+    "serverless": "^1.39.1",
+    "serverless-offline": "^4.9.2",
+    "serverless-webpack": "^5.2.0",
+    "webpack": "^4.29.6",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "scripts": {
+    "start": "sls offline start --noTimeout --port 3000 --host 0.0.0.0",
+    "docker": "docker run -it --rm -p 3000:3000 -v $PWD:/usr/src/app -w /usr/src/app node:8.10-alpine ./node_modules/.bin/sls offline start --noTimeout --port 3000 --host 0.0.0.0"
+  }
+}
