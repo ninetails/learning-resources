@@ -1,0 +1,3 @@
+plugins:
+  - serverless-webpack
+  - serverless-offline
