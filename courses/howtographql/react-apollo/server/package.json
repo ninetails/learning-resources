@@ -1,0 +1,18 @@
+{
+  "name": "hackernews-node",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js",
+    "prisma": "PRISMA_MANAGEMENT_API_SECRET=mysecret42 prisma"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.5.1",
+    "prisma-client-lib": "^1.29.2"
+  },
+  "devDependencies": {
+    "prisma": "^1.29.2"
+  }
+}
