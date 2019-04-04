@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ApolloClient } from 'apollo-client'
 import { useApolloClient } from 'react-apollo-hooks'
 import gql from 'graphql-tag'
-import Link, { LinkData } from './Link'
+import Link, { LinkData, fragment as linkFragments } from './Link'
 
 type SearchState = {
   links?: LinkData[]
@@ -13,22 +13,11 @@ const FEED_SEARCH_QUERY = gql`
   query FeedSearchQuery($filter: String!) {
     feed(filter: $filter) {
       links {
-        id
-        url
-        description
-        createdAt
-        postedBy {
-          id
-          name
-        }
-        votes {
-          id
-          user {
-            id
-          }
-        }
+        ...LinkLinksList
       }
     }
+
+    ${linkFragments.link}
   }
 `
 

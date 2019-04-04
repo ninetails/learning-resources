@@ -24,22 +24,51 @@ export type LinkProps = {
   updateStoreAfterVote?: (store: any, vote: any, linkId: string) => void
 }
 
+const voteFragment = gql`
+  fragment VoteLinksList on Vote {
+    id
+    user {
+      id
+    }
+  }
+`
+
+const linkFragment = gql`
+  fragment LinkLinksList on Link {
+    id
+    createdAt
+    description
+    postedBy {
+      id
+      name
+    }
+    url
+    votes {
+      ...VoteLinksList
+    }
+  }
+
+  ${voteFragment}
+`
+
+export const fragment = {
+  vote: voteFragment,
+  link: linkFragment
+}
+
 const VOTE_MUTATION = gql`
   mutation VoteMutation($linkId: ID!) {
     vote(linkId: $linkId) {
       id
       link {
-        votes {
-          id
-          user {
-            id
-          }
-        }
+        ...LinkLinksList
       }
       user {
         id
       }
     }
+
+    ${linkFragment}
   }
 `
 

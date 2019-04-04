@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo-hooks'
 import { RouteComponentProps, useRouter } from '../BrowserRouter'
 import { FEED_QUERY, FeedQueryData } from './LinkList'
 import { LINKS_PER_PAGE } from '../constants'
+import { fragment as linkFragments } from './Link'
 
 type CreateLinkState = {
   description?: string
@@ -13,21 +14,10 @@ type CreateLinkState = {
 const POST_MUTATION = gql`
   mutation PostMutation($description: String!, $url: String!) {
     post(description: $description, url: $url) {
-      id
-      createdAt
-      description
-      postedBy {
-        id
-        name
-      }
-      url
-      votes {
-        id
-        user {
-          id
-        }
-      }
+      ...LinkLinksList
     }
+
+    ${linkFragments.link}
   }
 `
 

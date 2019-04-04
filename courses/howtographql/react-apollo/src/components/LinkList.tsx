@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-client'
 import { useSubscription, useQuery } from 'react-apollo-hooks'
 import { oc } from 'ts-optchain'
 import { History } from 'history'
-import Link, { LinkData } from './Link'
+import Link, { LinkData, fragment as linkFragments } from './Link'
 import { LINKS_PER_PAGE } from '../constants'
 import { useRouter, RouteComponentProps } from '../BrowserRouter'
 
@@ -30,44 +30,22 @@ export const FEED_QUERY = gql`
   query FeedQuery($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
     feed(first: $first, skip: $skip, orderBy: $orderBy) {
       links {
-        id
-        createdAt
-        description
-        postedBy {
-          id
-          name
-        }
-        url
-        votes {
-          id
-          user {
-            id
-          }
-        }
+        ...LinkLinksList
       }
       count
     }
+
+    ${linkFragments.link}
   }
 `
 
 const NEW_LINKS_SUBSCRIPTION = gql`
   subscription {
     newLink {
-      id
-      url
-      description
-      createdAt
-      postedBy {
-        id
-        name
-      }
-      votes {
-        id
-        user {
-          id
-        }
-      }
+      ...LinkLinksList
     }
+
+    ${linkFragments.link}
   }
 `
 
@@ -76,25 +54,14 @@ const NEW_VOTES_SUBSCRIPTION = gql`
     newVote {
       id
       link {
-        id
-        url
-        description
-        createdAt
-        postedBy {
-          id
-          name
-        }
-        votes {
-          id
-          user {
-            id
-          }
-        }
+        ...LinkLinksList
       }
       user {
         id
       }
     }
+
+    ${linkFragments.link}
   }
 `
 
