@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { LOCALE_ID, NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 
@@ -11,8 +11,14 @@ import { HeroesComponent } from './heroes/heroes.component'
 import { HeroDetailComponent } from './hero-detail/hero-detail.component'
 import { MessagesComponent } from './messages/messages.component'
 import { AppRoutingModule } from './app-routing.module'
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component'
 import { HeroSearchComponent } from './hero-search/hero-search.component'
+import { registerLocaleData } from '@angular/common'
+import localePt from '@angular/common/locales/pt'
+import { ServiceWorkerModule } from '@angular/service-worker'
+import { environment } from '../environments/environment'
+
+registerLocaleData(localePt)
 
 @NgModule({
   declarations: [
@@ -30,9 +36,12 @@ import { HeroSearchComponent } from './hero-search/hero-search.component'
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
     })
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'en' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

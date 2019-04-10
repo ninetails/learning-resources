@@ -10,7 +10,9 @@
     "@angular/forms": "~7.2.12",
     "@angular/platform-browser": "~7.2.12",
     "@angular/platform-browser-dynamic": "~7.2.12",
+    "@angular/pwa": "^0.12.4",
     "@angular/router": "~7.2.12",
+    "@angular/service-worker": "~7.2.12",
     "angular-in-memory-web-api": "^0.8.0",
     "core-js": "^2.6.5",
     "rxjs": "~6.4.0",
@@ -44,6 +46,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "serve:genkeys": "npx tls-keygen 'certificates/localhost.key' 'certificates/localhost.crt'",
+    "serve:server": "npx http-server -g --cors -S -K certificates/localhost.key -C certificates/localhost.crt -c-1 dist/angular-tour-of-heroes",
+    "serve:prod": "$npm_execpath run serve:genkeys && $npm_execpath run serve:server"
   }
 }
