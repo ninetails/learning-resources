@@ -8,13 +8,18 @@
     "@angular/compiler": "~7.2.12",
     "@angular/core": "~7.2.12",
     "@angular/forms": "~7.2.12",
+    "@angular/http": "~7.2.12",
     "@angular/platform-browser": "~7.2.12",
     "@angular/platform-browser-dynamic": "~7.2.12",
+    "@angular/platform-server": "~7.2.12",
     "@angular/pwa": "^0.12.4",
     "@angular/router": "~7.2.12",
     "@angular/service-worker": "~7.2.12",
+    "@nguniversal/express-engine": "^7.1.1",
+    "@nguniversal/module-map-ngfactory-loader": "0.0.0",
     "angular-in-memory-web-api": "^0.8.0",
     "core-js": "^2.6.5",
+    "express": "^4.15.2",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.3",
     "zone.js": "~0.9.0"
@@ -36,9 +41,11 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "~5.4.2",
+    "ts-loader": "^5.2.0",
     "ts-node": "~8.0.3",
     "tslint": "~5.15.0",
-    "typescript": "~3.2.4"
+    "typescript": "~3.2.4",
+    "webpack-cli": "^3.1.0"
   },
   "scripts": {
     "ng": "ng",
@@ -49,6 +56,10 @@
     "e2e": "ng e2e",
     "serve:genkeys": "npx tls-keygen 'certificates/localhost.key' 'certificates/localhost.crt'",
     "serve:server": "npx http-server -g --cors -S -K certificates/localhost.key -C certificates/localhost.crt -c-1 dist/angular-tour-of-heroes",
-    "serve:prod": "$npm_execpath run serve:genkeys && $npm_execpath run serve:server"
+    "serve:prod": "$npm_execpath run serve:genkeys && $npm_execpath run serve:server",
+    "compile:server": "webpack --config webpack.server.config.js --progress --colors",
+    "serve:ssr": "node dist/server",
+    "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
+    "build:client-and-server-bundles": "ng build --prod && ng run angular-tour-of-heroes:server:production"
   }
 }

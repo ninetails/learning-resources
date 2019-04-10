@@ -30,7 +30,7 @@ registerLocaleData(localePt)
     HeroSearchComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     FormsModule,
     AppRoutingModule,
     HttpClientModule,

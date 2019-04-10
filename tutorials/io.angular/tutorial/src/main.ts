@@ -16,7 +16,8 @@ declare const require
 
 const translations = require(`raw-loader!./locale/messages.pt.xlf`)
 
-platformBrowserDynamic()
+document.addEventListener('DOMContentLoaded', () => {
+  platformBrowserDynamic()
   .bootstrapModule(AppModule, {
     providers: [
       { provide: TRANSLATIONS, useValue: translations },
@@ -24,3 +25,4 @@ platformBrowserDynamic()
     ]
   })
   .catch(err => console.error(err))
+});
