@@ -1,0 +1,11 @@
+{
+  "name": "rxjs",
+  "version": "0.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "rxjs": "^6.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}
