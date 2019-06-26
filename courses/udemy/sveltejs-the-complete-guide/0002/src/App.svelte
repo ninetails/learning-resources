@@ -1,20 +1,21 @@
 <script>
   import ContactCard from './ContactCard.svelte'
 
-  let userName = 'Max'
-  let jobTitle = ''
-  let userImage = ''
-  let description = ''
-
   let formState
   let createdContacts = []
 
   function addContact() {
-    const areAllFieldsWithValue = [userName, jobTitle, userImage, description]
-      .map(field => field.trim().length)
+    const fields = [...this.elements].filter(el => el.id)
+    const contact = fields.reduce(
+      (acc, el) => ({ ...acc, [el.id]: el.value.trim() }),
+      {}
+    )
+
+    const isAllFilled = Object.entries(contact)
+      .map(([_, value]) => value.length)
       .reduce((acc, itemLen) => acc && Boolean(itemLen), true)
 
-    if (!areAllFieldsWithValue) {
+    if (!isAllFilled) {
       formState = 'invalid'
       return
     }
@@ -23,21 +24,17 @@
       ...createdContacts,
       {
         id: Math.random(),
-        userName,
-        jobTitle,
-        userImage,
-        description
+        ...contact
       }
     ]
 
     formState = 'done'
   }
 
-  function del(index) {
-    return () => {
-      createdContacts.splice(index, 1)
-      createdContacts = [...createdContacts]
-    }
+  function del(index, event) {
+    console.log(this, event)
+    createdContacts.splice(index, 1)
+    createdContacts = createdContacts.slice(0)
   }
 </script>
 
@@ -48,26 +45,25 @@
   }
 </style>
 
-<div id="form">
+<form on:submit|preventDefault={addContact} id="form">
   <div class="form-control">
     <label for="userName">User Name</label>
-    <input type="text" bind:value={userName} id="userName" />
+    <input type="text" id="userName" />
   </div>
   <div class="form-control">
     <label for="jobTitle">Job Title</label>
-    <input type="text" bind:value={jobTitle} id="jobTitle" />
+    <input type="text" id="jobTitle" />
   </div>
   <div class="form-control">
     <label for="image">Image URL</label>
-    <input type="text" bind:value={userImage} id="image" />
+    <input type="text" id="userImage" />
   </div>
   <div class="form-control">
     <label for="desc">Description</label>
-    <textarea rows="3" bind:value={description} id="desc" />
+    <textarea rows="3" id="description" />
   </div>
-</div>
-
-<button on:click={addContact}>Add Contact Card</button>
+  <button type="submit">Add Contact Card</button>
+</form>
 
 {#if formState === 'invalid'}
   <p>Invalid input.</p>
@@ -78,7 +74,7 @@
 {#each createdContacts as contact, i (contact.id)}
   <h2># {i + 1}</h2>
   <ContactCard {...contact} />
-  <button on:click={del(i)}>x</button>
+  <button on:click={del.bind(this, i)}>x</button>
 {:else}
   <p>Please start adding some contacts.</p>
 {/each}
