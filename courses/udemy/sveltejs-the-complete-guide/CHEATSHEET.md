@@ -1,30 +1,33 @@
-# Svelte Cheatsheet
+# Svelte v3 Cheatsheet
 
-<!-- TOC -->
+<details>
+  <summary>Table of Contents</summary>
+<!-- TOC depthFrom:2 -->
 
-- [Svelte Cheatsheet](#svelte-cheatsheet)
-  - [Variables](#variables)
-    - [Local variable](#local-variable)
-    - [Repassing props](#repassing-props)
-      - [Shorthand when name are the same](#shorthand-when-name-are-the-same)
-      - [Using Spread](#using-spread)
-  - [Statements](#statements)
-    - [if/else](#ifelse)
-    - [each](#each)
-  - [DOM Events](#dom-events)
-    - [Browser (DOM) events](#browser-dom-events)
-    - [Interceptors](#interceptors)
-      - [Available [event modifiers](https://svelte.dev/tutorial/event-modifiers)](#available-event-modifiershttpssveltedevtutorialevent-modifiers)
-    - [Repassing events](#repassing-events)
-    - [Repassing multiple/custom events](#repassing-multiplecustom-events)
-  - [Slots](#slots)
-    - [Usage](#usage)
-    - [Default values](#default-values)
-    - [Named Slot](#named-slot)
-  - [Component Lifecycle Hooks](#component-lifecycle-hooks)
-    - [Special Hook](#special-hook)
+- [Variables](#variables)
+  - [Local variable](#local-variable)
+  - [Repassing props](#repassing-props)
+    - [Shorthand when name are the same](#shorthand-when-name-are-the-same)
+    - [Using Spread](#using-spread)
+- [Statements](#statements)
+  - [if/else](#ifelse)
+  - [each](#each)
+- [DOM Events](#dom-events)
+  - [Browser (DOM) events](#browser-dom-events)
+  - [Interceptors](#interceptors)
+    - [Available event modifiers](#available-event-modifiers)
+  - [Forwarding events](#forwarding-events)
+  - [Repassing multiple/custom events](#repassing-multiplecustom-events)
+    - [Custom events](#custom-events)
+- [Slots](#slots)
+  - [Usage](#usage)
+  - [Default values](#default-values)
+  - [Named Slot](#named-slot)
+- [Component Lifecycle Hooks](#component-lifecycle-hooks)
+  - [Special Hook](#special-hook)
 
 <!-- /TOC -->
+</details>
 
 ## Variables
 
@@ -138,7 +141,9 @@ App.svelte
 </form>
 ```
 
-#### Available [event modifiers](https://svelte.dev/tutorial/event-modifiers)
+#### Available event modifiers
+
+[Official Tutorial](https://svelte.dev/tutorial/event-modifiers)
 
 - preventDefault
 - stopPropagation
@@ -148,7 +153,7 @@ App.svelte
 
 Can be chained: `on:click|once|capture={...}`
 
-### Repassing events
+### Forwarding events
 
 When component have only one event
 
@@ -180,13 +185,36 @@ Component.svelte
   const dispatch = createEventDispatcher()
 </script>
 
-<Button on:click={(...args) => dispatch('event-name', ...args)} />
+<Button on:click={(...args) => dispatch('eventname', ...args)} />
 ```
 
 then calling
 
 ```
-<Component on:event-name={fn} />
+<Component on:eventname={fn} />
+```
+
+#### Custom events
+
+Svelte will wrap DOM event inside a CustomEvent
+
+When calling
+
+```
+<button on:customevent={event => dispatch('handler', { foo: 'bar', event })} />
+```
+
+that function associated with `handler`, on example above, will contain `detail` attribute with dispatch second argument
+
+```
+CustomEvent {
+  // ...
+  detail: {
+    foo: 'bar',
+    event: ...
+  }
+  // ...
+}
 ```
 
 ## Slots

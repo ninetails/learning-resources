@@ -1,8 +1,8 @@
 <script>
-  export let controlType,
+  export let controlType = undefined,
     id,
     label,
-    rows,
+    rows = undefined,
     type = 'text'
 </script>
 

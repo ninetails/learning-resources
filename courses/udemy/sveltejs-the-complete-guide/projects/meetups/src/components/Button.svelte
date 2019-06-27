@@ -1,8 +1,9 @@
 <script>
   export let type = 'button',
-    caption,
-    href,
-    mode
+    form = undefined,
+    href = undefined,
+    mode = null,
+    color = null
 </script>
 
 <style>
@@ -84,7 +85,11 @@
 </style>
 
 {#if href}
-  <a {href}>{caption}</a>
+  <a {href}>
+    <slot />
+  </a>
 {:else}
-  <button class={mode} {type}>{caption}</button>
+  <button class="{mode || ''} {color || ''}" {type} {form} on:click>
+    <slot />
+  </button>
 {/if}

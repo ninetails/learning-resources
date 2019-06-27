@@ -3,6 +3,7 @@
   import MeetupGrid from './Meetups/MeetupGrid.svelte'
   import TextInput from './components/TextInput.svelte'
   import Button from './components/Button.svelte'
+  import EditMeetup from './Meetups/EditMeetup.svelte'
 
   let meetups = [
     {
@@ -26,18 +27,32 @@
     }
   ]
 
-  function addMeetup() {
-    const fields = [...this.elements].filter(el => Boolean(el.id))
-    const newMeetup = fields.reduce(
-      (acc, el) => ({ ...acc, [el.id]: el.value }),
-      {
-        id: Math.random()
-          .toString()
-          .substr(2)
-      }
-    )
+  let editMode
 
-    meetups = [...meetups, newMeetup]
+  function addMeetup(event) {
+    const { meetup } = event.detail
+    meetups = [meetup, ...meetups]
+
+    cancelEdit()
+  }
+
+  function toggleFavorite(event) {
+    const { id } = event.detail
+    const meetup = meetups.find(({ id: meetupId }) => meetupId === id)
+    const meetupIndex = meetups.findIndex(({ id: meetupId }) => meetupId === id)
+
+    const updatedMeetup = {
+      ...meetup,
+      isFavorite: !meetup.isFavorite
+    }
+
+    const updatedMeetups = meetups.slice(0)
+    updatedMeetups.splice(meetupIndex, 1, updatedMeetup)
+    meetups = updatedMeetups
+  }
+
+  function cancelEdit() {
+    editMode = undefined
   }
 </script>
 
@@ -46,28 +61,19 @@
     margin-top: 5rem;
   }
 
-  form {
-    width: 30rem;
-    max-width: 90%;
-    margin: auto;
+  .meetup-controls {
+    margin: 1rem;
   }
 </style>
 
 <Header />
 
 <main>
-  <form on:submit|preventDefault={addMeetup}>
-    <TextInput id="title" label="Title" />
-    <TextInput id="subtitle" label="Subtitle" />
-    <TextInput id="address" label="Address" />
-    <TextInput id="imageUrl" label="Image URL" />
-    <TextInput id="contactEmail" label="Email" />
-    <TextInput
-      id="description"
-      label="Description"
-      rows={3}
-      controlType="textarea" />
-    <Button type="submit" caption="Save" />
-  </form>
-  <MeetupGrid {meetups} />
+  <div class="meetup-controls">
+    <Button on:click={() => (editMode = 'add')}>New Meetup</Button>
+  </div>
+  {#if editMode === 'add'}
+    <EditMeetup on:save={addMeetup} on:cancel={cancelEdit} />
+  {/if}
+  <MeetupGrid {meetups} on:togglefavorite={toggleFavorite} />
 </main>
