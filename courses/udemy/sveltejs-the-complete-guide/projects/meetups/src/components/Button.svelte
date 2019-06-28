@@ -3,7 +3,8 @@
     form = undefined,
     href = undefined,
     mode = null,
-    color = null
+    color = null,
+    disabled = false
 </script>
 
 <style>
@@ -89,7 +90,7 @@
     <slot />
   </a>
 {:else}
-  <button class="{mode || ''} {color || ''}" {type} {form} on:click>
+  <button class="{mode || ''} {color || ''}" {type} {form} {disabled} on:click>
     <slot />
   </button>
 {/if}

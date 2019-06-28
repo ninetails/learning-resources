@@ -3,7 +3,11 @@
     id,
     label,
     rows = undefined,
-    type = 'text'
+    type = 'text',
+    valid = true,
+    validityMessage = undefined
+
+  let touched = false
 </script>
 
 <style>
@@ -37,13 +41,27 @@
     width: 100%;
     margin: 0.25rem 0;
   }
+
+  .invalid {
+    border-color: red;
+    background-color: #fde3e3;
+  }
+
+  .error-message {
+    color: red;
+    margin: 0.25rem 0;
+  }
 </style>
 
 <div class="form-control">
   <label for="title">{label}</label>
   {#if controlType === 'textarea'}
-    <textarea {rows} {id} />
+    <textarea {rows} {id} class:invalid={!valid} on:input on:blur />
   {:else}
-    <input {type} {id} />
+    <input {type} {id} class:invalid={!valid} on:input on:blur />
+  {/if}
+
+  {#if validityMessage && !valid}
+    <p class="error-message">{validityMessage}</p>
   {/if}
 </div>
