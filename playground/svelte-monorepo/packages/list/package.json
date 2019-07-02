@@ -1,0 +1,24 @@
+{
+  "name": "list-component",
+  "version": "0.0.0",
+  "module": "index.mjs",
+  "main": "index.js",
+  "keywords": [
+    "svelte"
+  ],
+  "files": [
+    "src",
+    "index.mjs",
+    "index.js"
+  ],
+  "devDependencies": {
+    "rollup": "^1.16.4",
+    "rollup-plugin-svelte": "^5.1.0",
+    "svelte": "^3.6.3"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "$npm_execpath run build",
+    "postinstall": "$npm_execpath run build"
+  }
+}
