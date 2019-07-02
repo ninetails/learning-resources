@@ -4,6 +4,7 @@
   <summary>Table of Contents</summary>
 <!-- TOC depthFrom:2 -->
 
+- [Best Practices](#best-practices)
 - [Variables](#variables)
   - [Local variable](#local-variable)
   - [Repassing props](#repassing-props)
@@ -25,9 +26,20 @@
   - [Named Slot](#named-slot)
 - [Component Lifecycle Hooks](#component-lifecycle-hooks)
   - [Special Hook](#special-hook)
+- [Stores](#stores)
+  - [Writable](#writable)
+  - [Using (naive way)](#using-naive-way)
+  - [Using (Svelte shortcut)](#using-svelte-shortcut)
+  - [Derived stores](#derived-stores)
 
 <!-- /TOC -->
 </details>
+
+## Best Practices
+
+- Separate Stateful components from presentational components
+- Avoid using `bind:*`, use only when necessary
+- Always remember to unsubscribe `onDestroy`
 
 ## Variables
 
@@ -283,3 +295,53 @@ App.svelte
 ### Special Hook
 
 - tick()
+
+## Stores
+
+### Writable
+
+```
+store.js
+---
+
+import { writable } from 'svelte/store'
+
+export default writable(initialValue)
+```
+
+### Using (naive way)
+
+```
+<script>
+  import { onDestroy } from 'svelte'
+
+  let items
+  function setItems(values) {
+    items = values
+  }
+
+  const unsubscribe = cartStore.subscribe(setItems)
+
+  onDestroy(unsubscribe)
+</script>
+
+{#each items as item (item.id)}
+  <CartItem {...item} />
+{:else}
+  <p>No items in cart yet!</p>
+{/each}
+```
+
+### Using (Svelte shortcut)
+
+```
+{#each $store as item (item.id)}
+  <CartItem {...item} />
+{:else}
+  <p>No items in cart yet!</p>
+{/each}
+```
+
+### Derived stores
+
+> https://svelte.dev/tutorial/derived-stores
