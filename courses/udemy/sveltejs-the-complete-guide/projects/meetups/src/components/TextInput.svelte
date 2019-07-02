@@ -5,7 +5,8 @@
     rows = undefined,
     type = 'text',
     valid = true,
-    validityMessage = undefined
+    validityMessage = undefined,
+    value
 
   let touched = false
 </script>
@@ -56,9 +57,9 @@
 <div class="form-control">
   <label for="title">{label}</label>
   {#if controlType === 'textarea'}
-    <textarea {rows} {id} class:invalid={!valid} on:input on:blur />
+    <textarea {rows} {id} {value} class:invalid={!valid} on:input on:blur />
   {:else}
-    <input {type} {id} class:invalid={!valid} on:input on:blur />
+    <input {type} {id} {value} class:invalid={!valid} on:input on:blur />
   {/if}
 
   {#if validityMessage && !valid}
