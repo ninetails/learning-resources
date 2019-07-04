@@ -31,6 +31,10 @@
   - [Using (naive way)](#using-naive-way)
   - [Using (Svelte shortcut)](#using-svelte-shortcut)
   - [Derived stores](#derived-stores)
+- [Special Elements](#special-elements)
+  - [Dynamic Components](#dynamic-components)
+  - [Recursive Components](#recursive-components)
+  - [Use window as component](#use-window-as-component)
 
 <!-- /TOC -->
 </details>
@@ -345,3 +349,23 @@ export default writable(initialValue)
 ### Derived stores
 
 > https://svelte.dev/tutorial/derived-stores
+
+## Special Elements
+
+### Dynamic Components
+
+```
+<svelte:component this={Component} {...props} />
+```
+
+### Recursive Components
+
+```
+<svelte:self {...props} />
+```
+
+### Use window as component
+
+```
+<svelte:window {...props} />
+```
